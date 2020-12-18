@@ -13,7 +13,6 @@ On_Raspberry = not (sys.platform == 'win32') # determine if running on Windows o
 print("Running on Raspberry:",On_Raspberry)
 
 if On_Raspberry == True:
-    import board
     import busio
 
 path_abs = os.path.dirname(os.path.abspath(__file__))
