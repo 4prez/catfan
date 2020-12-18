@@ -18,9 +18,9 @@ if On_Raspberry == True:
 path_abs = os.path.dirname(os.path.abspath(__file__))
 print(path_abs)
 
-host_name = socket.gethostname()
+# host_name = socket.gethostname()
 host_ip = socket.gethostbyname(host_name)
-print("Hostname :  ", host_name)
+# print("Hostname :  ", host_name)
 print("IP : ", host_ip)
 print("")
 
