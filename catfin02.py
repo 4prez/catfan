@@ -38,8 +38,8 @@ if On_Raspberry == True:
     GPIO.setmode(GPIO.BOARD)
     PIN_TRIGGER = 7
     PIN_ECHO = 11
-    PIN_FAN = 40
-    PIN_FAN2 = 21
+    PIN_FAN = 37
+    PIN_FAN2 = 26
     GPIO.setup(PIN_ECHO, GPIO.IN)
     GPIO.setup(PIN_TRIGGER, GPIO.OUT)
     GPIO.setup(PIN_FAN, GPIO.OUT)
@@ -73,7 +73,7 @@ with open(startup_csv_path, 'a') as fd:
 # initalize variables
 distance_trigger = 12 # in
 distance_exit = 6 # in
-fan_duration = 10 # in seconds
+fan_duration = 60 # in seconds
 black_out_start_01 = dt.time(3, 25, 56)
 black_out_duration_01 = 15 # minutes
 # black_out_end_01 = black_out_start_01 + black_out_duration_01*60
