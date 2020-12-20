@@ -39,11 +39,14 @@ if On_Raspberry == True:
     PIN_TRIGGER = 7
     PIN_ECHO = 11
     PIN_FAN = 40
+    PIN_FAN2 = 21
     GPIO.setup(PIN_ECHO, GPIO.IN)
     GPIO.setup(PIN_TRIGGER, GPIO.OUT)
     GPIO.output(PIN_TRIGGER, GPIO.LOW)
     GPIO.setup(PIN_FAN, GPIO.OUT)
     GPIO.output(PIN_FAN, GPIO.HIGH)
+    GPIO.setup(PIN_FAN2, GPIO.OUT)
+    GPIO.output(PIN_FAN2, GPIO.HIGH)
 
     print("Waiting for sensor to settle")
     time.sleep(2)
@@ -90,6 +93,7 @@ while not Exit_Now:
     print(dt.datetime.now().strftime("%m/%d/%Y %H:%M:%S"))
     if On_Raspberry == True:
         print(str(GPIO.input(PIN_FAN)))
+        print(str(GPIO.input(PIN_FAN2)))
 
     # CHECK FOR TRIGGERS
 
