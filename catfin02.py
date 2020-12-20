@@ -42,10 +42,10 @@ if On_Raspberry == True:
     PIN_FAN2 = 21
     GPIO.setup(PIN_ECHO, GPIO.IN)
     GPIO.setup(PIN_TRIGGER, GPIO.OUT)
-    GPIO.output(PIN_TRIGGER, GPIO.LOW)
     GPIO.setup(PIN_FAN, GPIO.OUT)
-    GPIO.output(PIN_FAN, GPIO.HIGH)
     GPIO.setup(PIN_FAN2, GPIO.OUT)
+    GPIO.output(PIN_TRIGGER, GPIO.LOW)
+    GPIO.output(PIN_FAN, GPIO.HIGH)
     GPIO.output(PIN_FAN2, GPIO.HIGH)
 
     print("Waiting for sensor to settle")
