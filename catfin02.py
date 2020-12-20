@@ -38,7 +38,7 @@ if On_Raspberry == True:
     GPIO.setmode(GPIO.BOARD)
     PIN_TRIGGER = 7
     PIN_ECHO = 11
-    PIN_FAN = 37
+    PIN_FAN = 40
     GPIO.setup(PIN_ECHO, GPIO.IN)
     GPIO.setup(PIN_TRIGGER, GPIO.OUT)
     GPIO.output(PIN_TRIGGER, GPIO.LOW)
