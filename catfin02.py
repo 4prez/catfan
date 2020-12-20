@@ -1,12 +1,31 @@
 # description
+# RPi program to run a fan based on distance sensor trip or manual intervention
+# Button: if not running - run as trigger, if running - stop running
+# Sensor: based on depth, if not running trigger fan
+# Blackout: time window where Sensor does not trip
+
+# structure
+# check if running on Pi
+# load packages
+# log boot
+# initiate variables
+# start loop
+# check for triggers
+# fan control
+# loop
+
+
+
+
+
 
 # load packages
-# import RPi.GPIO as GPIO
-import socket
+#
 import datetime as dt
 import os
 import sys
-from time import sleep
+import time
+
 
 # Check if running on Pi (linux) vs windows (for development)
 On_Raspberry = not (sys.platform == 'win32') # determine if running on Windows or Pi (for inputs)
@@ -14,6 +33,7 @@ print("Running on Raspberry:",On_Raspberry)
 
 if On_Raspberry == True:
     print("On Rasp")
+    import RPi.GPIO as GPIO
 
 path_abs = os.path.dirname(os.path.abspath(__file__))
 print(path_abs)
@@ -41,7 +61,7 @@ time_last_write = dt.datetime.now()
 # loop start
 while not Exit_Now:
     print(dt.datetime.now().strftime("%m/%d/%Y %H:%M:%S"))
-    sleep(1)
+    time.sleep(1)
 
 if On_Raspberry == True:
     GPIO.cleanup()
