@@ -36,11 +36,16 @@ if On_Raspberry == True:
     import RPi.GPIO as GPIO
     # Setup Distance Sensor
     GPIO.setmode(GPIO.BOARD)
+    GPIO.cleanup()
     PIN_TRIGGER = 7
     PIN_ECHO = 11
-    GPIO.setup(PIN_TRIGGER, GPIO.OUT)
+    PIN_FAN = 37
     GPIO.setup(PIN_ECHO, GPIO.IN)
+    GPIO.setup(PIN_TRIGGER, GPIO.OUT)
     GPIO.output(PIN_TRIGGER, GPIO.LOW)
+    GPIO.setup(PIN_FAN, GPIO.OUT)
+    GPIO.output(PIN_FAN, GPIO.LOW)
+
     print("Waiting for sensor to settle")
     time.sleep(2)
 
@@ -64,7 +69,7 @@ with open(startup_csv_path, 'a') as fd:
     fd.write("\n")
 
 # initalize variables
-distance_trigger = 6 # in
+distance_trigger = 12 # in
 fan_duration = 10 # in seconds
 black_out_start_01 = dt.time(3, 25, 56)
 black_out_duration_01 = 15 # minutes
@@ -98,7 +103,7 @@ while not Exit_Now:
         while GPIO.input(PIN_ECHO) == 1:
             pulse_end_time = time.time()
         pulse_duration = pulse_end_time - pulse_start_time
-        current_distance = round(pulse_duration * 6752, 0)
+        current_distance = round(pulse_duration * 6752, 1)
         print("Distance:", current_distance, "in")
         # ignore if during blackout
         black_out = False
@@ -118,7 +123,15 @@ while not Exit_Now:
         fan_run = not(False)
         fan_trigger_button = False
 
-    print(fan_run)
+    if fan_run == True:
+        print("True: " + str(fan_run))
+        if On_Raspberry == True:
+            GPIO.output(PIN_FAN, GPIO.HIGH)
+
+    if fan_run == False:
+        print("False: " + str(fan_run))
+        if On_Raspberry == True:
+            GPIO.output(PIN_FAN, GPIO.LOW)
 
     # prepare for loop
     time.sleep(1)
