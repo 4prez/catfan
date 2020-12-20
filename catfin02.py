@@ -34,14 +34,15 @@ print("Running on Raspberry:",On_Raspberry)
 if On_Raspberry == True:
     print("On Rasp")
     import RPi.GPIO as GPIO
-
+    # Setup Distance Sensor
     GPIO.setmode(GPIO.BOARD)
-
     PIN_TRIGGER = 7
     PIN_ECHO = 11
-
     GPIO.setup(PIN_TRIGGER, GPIO.OUT)
     GPIO.setup(PIN_ECHO, GPIO.IN)
+    GPIO.output(PIN_TRIGGER, GPIO.LOW)
+    print("Waiting for sensor to settle")
+    time.sleep(2)
 
 
 
@@ -63,69 +64,56 @@ with open(startup_csv_path, 'a') as fd:
     fd.write("\n")
 
 # initalize variables
-Exit_Now = False
+distance_trigger = 6 # in
 fan_duration = 10 # in seconds
-fan_run = False
-fan_trigger_distance = True
-fan_trigger_button = False
 black_out_start_01 = dt.time(3, 25, 56)
 black_out_duration_01 = 15 # minutes
 # black_out_end_01 = black_out_start_01 + black_out_duration_01*60
 black_out_start_02 = dt.time(15, 25, 0)
 black_out_duration_02 = 15 # minutes
 # black_out_end_02 = black_out_start_02 + timedelta(minutes=black_out_duration_02)
-# fan_end_time =  dt.datetime.now()
+
+Exit_Now = False
+fan_run = False
+fan_trigger_distance = True
+fan_trigger_button = False
 
 fan_end_time = dt.datetime.now() + dt.timedelta(seconds=fan_duration)
 
-# loop start
+# LOOP START
 while not Exit_Now:
     print(dt.datetime.now().strftime("%m/%d/%Y %H:%M:%S"))
 
-    # check for triggers
-    # button
-    # fan_end_time = dt.datetime.now() + dt.timedelta(seconds=fan_duration)
-    # fan_trigger_distance = True
-    # distance
+    # CHECK FOR TRIGGERS
+
+    # BUTTON TRIGGER
+
+    # DISTANCE TRIGGER
     if On_Raspberry == True:
-        GPIO.output(PIN_TRIGGER, GPIO.LOW)
-        print("Waiting for sensor to settle")
-
-        time.sleep(2)
-
-        print("Calculating distance")
-
         GPIO.output(PIN_TRIGGER, GPIO.HIGH)
-
         time.sleep(0.00001)
-
         GPIO.output(PIN_TRIGGER, GPIO.LOW)
-
         while GPIO.input(PIN_ECHO) == 0:
             pulse_start_time = time.time()
         while GPIO.input(PIN_ECHO) == 1:
             pulse_end_time = time.time()
-
         pulse_duration = pulse_end_time - pulse_start_time
-        distance = round(pulse_duration * 17150, 2)
-        print("Distance:", distance, "cm")
+        current_distance = round(pulse_duration * 6752, 0)
+        print("Distance:", current_distance, "in")
+        # ignore if during blackout
+        black_out = False
+        if black_out == False and current_distance < distance_trigger:
+            fan_trigger_distance = True
 
 
-    # ignore if during blackout
 
-
-
-    # fan control
-    # fan control - check timer
-
+    # FAN CONTROL
     if fan_run == True and dt.datetime.now() > fan_end_time:
         fan_run = False
-
-
     if fan_trigger_distance == True:
         fan_run = True
+        fan_end_time = dt.datetime.now() + dt.timedelta(seconds=fan_duration)
         fan_trigger_distance = False
-
     if fan_trigger_button == True and fan_run == True:
         fan_run = not(False)
         fan_trigger_button = False
