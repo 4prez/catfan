@@ -80,7 +80,7 @@ with open(startup_csv_path, 'a') as fd:
 # initalize variables
 distance_trigger = 12 # in
 distance_exit = 6 # in
-fan_duration = 10 # in seconds
+fan_duration = 5 # in seconds
 black_out_start_01 = dt.time(3, 25, 56)
 black_out_duration_01 = 15 # minutes
 # black_out_end_01 = black_out_start_01 + black_out_duration_01*60
@@ -99,8 +99,8 @@ fan_end_time = dt.datetime.now() + dt.timedelta(seconds=fan_duration)
 while not Exit_Now:
     print(dt.datetime.now().strftime("%m/%d/%Y %H:%M:%S"))
     if On_Raspberry == True:
-        print(str(GPIO.input(PIN_FAN)))
-        print(str(fan_trigger_button))
+        print("GPIO Fan: " + str(GPIO.input(PIN_FAN)))
+        print("Button:" + str(fan_trigger_button))
 
 
     # CHECK FOR TRIGGERS
@@ -136,7 +136,9 @@ while not Exit_Now:
         fan_end_time = dt.datetime.now() + dt.timedelta(seconds=fan_duration)
         fan_trigger_distance = False
     if fan_trigger_button == True:
-        fan_run = not(False)
+        if fan_run == False:
+            fan_end_time = dt.datetime.now() + dt.timedelta(seconds=fan_duration)
+        fan_run = not (False)
         fan_trigger_button = False
 
     if fan_run == True:
