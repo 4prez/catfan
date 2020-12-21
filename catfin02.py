@@ -135,7 +135,7 @@ while not Exit_Now:
         fan_run = True
         fan_end_time = dt.datetime.now() + dt.timedelta(seconds=fan_duration)
         fan_trigger_distance = False
-    if fan_trigger_button == True and fan_run == True:
+    if fan_trigger_button == True:
         fan_run = not(False)
         fan_trigger_button = False
 
