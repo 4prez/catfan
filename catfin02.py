@@ -43,11 +43,17 @@ if On_Raspberry == True:
     GPIO.setup(PIN_ECHO, GPIO.IN)
     GPIO.setup(PIN_TRIGGER, GPIO.OUT)
     GPIO.setup(PIN_FAN, GPIO.OUT)
-    GPIO.setup(PIN_BUTTON, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+    GPIO.setup(PIN_BUTTON, GPIO.IN, pull_up_down=GPIO.PUD_UP)
     GPIO.output(PIN_TRIGGER, GPIO.LOW)
     GPIO.output(PIN_FAN, GPIO.HIGH)
 
+    def callback_button(inputpin):
+        # define global variable to allow the passing of data
+        global fan_trigger_button
+        if GPIO.input(inputpin) == 1:
+            fan_trigger_button = True
 
+    GPIO.add_event_detect(PIN_BUTTON, GPIO.BOTH, callback=callback_button)
 
     print("Waiting for sensor to settle")
     time.sleep(2)
