@@ -107,6 +107,8 @@ while not Exit_Now:
 
     # BUTTON TRIGGER
 
+
+
     # DISTANCE TRIGGER
     if On_Raspberry == True:
         GPIO.output(PIN_TRIGGER, GPIO.HIGH)
@@ -138,7 +140,7 @@ while not Exit_Now:
     if fan_trigger_button == True:
         if fan_run == False:
             fan_end_time = dt.datetime.now() + dt.timedelta(seconds=fan_duration)
-        fan_run = not (False)
+        fan_run = not (fan_run)
         fan_trigger_button = False
 
     if fan_run == True:
