@@ -2,7 +2,7 @@ import RPi.GPIO as GPIO
 import time
 GPIO.setmode(GPIO.BCM)
 GPIO.setwarnings(False)
-FAN_PIN = 37
+FAN_PIN = 18
 GPIO.setup(FAN_PIN,GPIO.OUT)
 print("LED on")
 GPIO.output(FAN_PIN,GPIO.HIGH)
