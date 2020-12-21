@@ -100,6 +100,7 @@ while not Exit_Now:
     print(dt.datetime.now().strftime("%m/%d/%Y %H:%M:%S"))
     if On_Raspberry == True:
         print(str(GPIO.input(PIN_FAN)))
+        print(str(fan_trigger_button))
 
 
     # CHECK FOR TRIGGERS
