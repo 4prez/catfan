@@ -2,10 +2,11 @@ import RPi.GPIO as GPIO
 import time
 GPIO.setmode(GPIO.BCM)
 GPIO.setwarnings(False)
-GPIO.setup(26,GPIO.OUT)
+FAN_PIN = 18
+GPIO.setup(FAN_PIN,GPIO.OUT)
 print("LED on")
-GPIO.output(26,GPIO.HIGH)
+GPIO.output(FAN_PIN,GPIO.HIGH)
 time.sleep(1)
 print("LED off")
-GPIO.output(26,GPIO.LOW)
+GPIO.output(FAN_PIN,GPIO.LOW)
 GPIO.cleanup()
