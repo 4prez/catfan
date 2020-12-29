@@ -137,12 +137,12 @@ while not Exit_Now:
     if fan_run == True:
         print("True: " + str(fan_run))
         if On_Raspberry == True:
-            GPIO.output(PIN_FAN, GPIO.HIGH)
+            GPIO.output(PIN_FAN, GPIO.LOW)
 
     if fan_run == False:
         print("False: " + str(fan_run))
         if On_Raspberry == True:
-            GPIO.output(PIN_FAN, GPIO.LOW)
+            GPIO.output(PIN_FAN, GPIO.HIGH)
 
     # prepare for loop
     time.sleep(1)
