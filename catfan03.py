@@ -78,7 +78,7 @@ with open(startup_csv_path, 'a') as fd:
     fd.write("\n")
 
 # initalize variables
-distance_trigger = 12 # in
+distance_trigger = 48 # in
 distance_exit = 6 # in
 fan_duration = 5 # in seconds
 black_out_start_01 = dt.time(3, 25, 56)
